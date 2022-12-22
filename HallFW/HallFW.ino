@@ -1,5 +1,5 @@
 /* 
-This is a very early stage project currently and code is not final by any means.
+This is a very early stage project currently and code is not final by any means
 */
 
 
@@ -34,15 +34,20 @@ int truthTable[16][4] = {{0, 0, 0, 0},
 int sensorReadings[16];
 
 // Set up a map to store the keymap
-std::map<int, char> keymapMux1 = {{0, 'a'}, {1, 'b'}, {2, 'c'}, {3, 'd'},
-                                 {4, 'e'}, {5, 'f'}, {6, 'g'}, {7, 'h'},
-                                 {8, 'i'}, {9, 'j'}, {10, 'k'}, {11, 'l'},
-                                 {12, 'm'}, {13, 'n'}, {14, 'o'}, {15, 'p'}};
+std::map<int, int> keymapMux1 = {{0, KEY_A}, {1, KEY_B}, {2, KEY_C}, {3, KEY_D},
+                                 {4, KEY_F}, {5, KEY_G}, {6, KEY_H}, {7, KEY_H},
+                                 {8, KEY_I}, {9, KEY_J}, {10, KEY_K}, {11, KEY_L},
+                                 {12, KEY_M}, {13, KEY_N}, {14, KEY_O}, {15, KEY_P}};
 
 std::map<int, int> actuationValues = {{0, 600}, {1, 600}, {2, 600}, {3, 600},
                                       {4, 600}, {5, 600}, {6, 600}, {7, 600},
                                       {8, 600}, {9, 600}, {10, 600}, {11, 600},
                                       {12, 600}, {13, 600}, {14, 600}, {15, 600}};
+
+std::map<int, int> releaseValues = {{0, 550}, {1, 550}, {2, 550}, {3, 550},
+                                    {4, 550}, {5, 550}, {6, 550}, {7, 550},
+                                    {8, 550}, {9, 550}, {10, 550}, {11, 550},
+                                    {12, 550}, {13, 550}, {14, 550}, {15, 550}};
                            
 
 void setup() {
@@ -85,8 +90,8 @@ for (int i = 0; i < 16; i++) {
   for (int i = 0; i < 16; i++) {
     if (sensorReadings[i] > actuationValues[i]) {
       Keyboard.press(keymapMux1[i]);
-    } else {
-    Keyboard.release(keymapMux1[i]);
-    }
+    } else if (sensorReadings[i] < releaseValues[i]) {
+      Keyboard.release(keymapMux1[i]);
   }
+}
 }
